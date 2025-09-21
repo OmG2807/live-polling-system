@@ -51,7 +51,6 @@ function AppContent() {
         <Chat
           onSendMessage={() => {}}
           userType={userRole}
-          userName={userRole === 'teacher' ? 'Teacher' : 'Student'}
         />
       )}
     </div>

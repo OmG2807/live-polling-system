@@ -118,7 +118,6 @@ const StudentDashboard = () => {
         <Chat
           onSendMessage={handleSendMessage}
           userType="student"
-          userName={name}
         />
       )}
     </div>
