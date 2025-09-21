@@ -30,7 +30,10 @@ const useSocket = (userType) => {
 
   useEffect(() => {
     // Initialize socket connection
-    socketRef.current = io('http://localhost:5000');
+    const serverUrl = process.env.NODE_ENV === 'production' 
+      ? process.env.REACT_APP_SERVER_URL || 'https://your-server-url.herokuapp.com'
+      : 'http://localhost:5000';
+    socketRef.current = io(serverUrl);
 
     const socket = socketRef.current;
 
