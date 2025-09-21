@@ -7,16 +7,9 @@ import PollResults from './PollResults';
 import Chat from './Chat';
 import {
   setName,
-  setConnected,
-  setHasAnswered,
   setCurrentAnswer,
   resetStudent,
 } from '../store/studentSlice';
-import {
-  setCurrentPoll,
-  updatePollResults,
-  endPoll,
-} from '../store/pollSlice';
 
 const StudentDashboard = () => {
   const dispatch = useDispatch();

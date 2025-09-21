@@ -6,19 +6,9 @@ import PollResults from './PollResults';
 import StudentList from './StudentList';
 import Chat from './Chat';
 import PastResults from './PastResults';
-import {
-  setConnected,
-  addStudent,
-  removeStudent,
-} from '../store/teacherSlice';
-import {
-  setCurrentPoll,
-  updatePollResults,
-  setPastPolls,
-} from '../store/pollSlice';
+// Redux imports removed as they're handled by useSocket hook
 
 const TeacherDashboard = () => {
-  const dispatch = useDispatch();
   const socket = useSocket('teacher');
   const { isConnected, students } = useSelector((state) => state.teacher);
   const { currentPoll, pollResults, pastPolls } = useSelector((state) => state.poll);

@@ -22,7 +22,6 @@ import {
 } from '../store/teacherSlice';
 import {
   addMessage,
-  setError as setChatError,
 } from '../store/chatSlice';
 
 const useSocket = (userType) => {
