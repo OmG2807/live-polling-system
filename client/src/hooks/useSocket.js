@@ -37,6 +37,36 @@ const useSocket = (userType) => {
 
     const socket = socketRef.current;
 
+    // Connection event handler
+    socket.on('connect', () => {
+      console.log('Socket connected:', socket.id);
+      if (userType === 'teacher') {
+        dispatch(setTeacherConnected(true));
+      } else {
+        dispatch(setStudentConnected(true));
+      }
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Socket disconnected');
+      if (userType === 'teacher') {
+        dispatch(setTeacherConnected(false));
+      } else {
+        dispatch(setStudentConnected(false));
+      }
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Socket connection error:', error);
+      if (userType === 'teacher') {
+        dispatch(setTeacherError('Failed to connect to server'));
+        dispatch(setTeacherConnected(false));
+      } else {
+        dispatch(setStudentError('Failed to connect to server'));
+        dispatch(setStudentConnected(false));
+      }
+    });
+
     // Common event handlers
     socket.on('error', (error) => {
       console.error('Socket error:', error);
