@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeChat } from '../store/chatSlice';
 
-const Chat = ({ onSendMessage, userType, userName }) => {
+const Chat = ({ onSendMessage, userType }) => {
   const dispatch = useDispatch();
   const { messages } = useSelector((state) => state.chat);
   const [newMessage, setNewMessage] = useState('');

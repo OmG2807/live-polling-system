@@ -7,7 +7,6 @@ import {
   updateTimeRemaining,
   endPoll,
   setPastPolls,
-  setError,
 } from '../store/pollSlice';
 import {
   setConnected as setStudentConnected,
