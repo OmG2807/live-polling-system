@@ -101,7 +101,7 @@ const useSocket = (userType) => {
 
     // Student-specific events
     if (userType === 'student') {
-      socket.on('student-connected', (studentData) => {
+      socket.on('student-connected', () => {
         dispatch(setStudentConnected(true));
       });
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useSocket from '../hooks/useSocket';
 import CreatePollForm from './CreatePollForm';
 import PollResults from './PollResults';
