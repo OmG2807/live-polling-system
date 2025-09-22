@@ -29,10 +29,24 @@ const useSocket = (userType) => {
 
   useEffect(() => {
     // Initialize socket connection
-    const serverUrl = process.env.NODE_ENV === 'production' 
-      ? process.env.REACT_APP_SERVER_URL || 'https://your-server-url.herokuapp.com'
+    const serverUrl = process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_SERVER_URL
       : 'http://localhost:5000';
-    socketRef.current = io(serverUrl);
+
+    // If production and no server URL configured, surface a clear error
+    if (process.env.NODE_ENV === 'production' && !serverUrl) {
+      console.error('REACT_APP_SERVER_URL is not set. Unable to connect to server.');
+    }
+
+    socketRef.current = io(serverUrl, {
+      transports: ['websocket', 'polling'],
+      withCredentials: true,
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      timeout: 20000,
+    });
 
     const socket = socketRef.current;
 

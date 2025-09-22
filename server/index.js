@@ -6,14 +6,19 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const server = http.createServer(app);
+
+// Allow CORS from environment-provided origin (e.g., Netlify) or localhost by default
+const ALLOWED_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
+
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
+    origin: ALLOWED_ORIGIN,
+    methods: ["GET", "POST"],
+    credentials: true,
   }
 });
 
-app.use(cors());
+app.use(cors({ origin: ALLOWED_ORIGIN, methods: ["GET", "POST"], credentials: true }));
 app.use(express.json());
 
 // In-memory storage (for demo purposes)
