@@ -10,13 +10,14 @@ const server = http.createServer(app);
 // Allow CORS from one or many origins via env (CLIENT_ORIGINS comma-separated), fallback to localhost
 const CLIENT_ORIGINS = (process.env.CLIENT_ORIGINS || process.env.CLIENT_ORIGIN || 'http://localhost:3000')
   .split(',')
-  .map(o => o.trim())
+  .map(o => o.trim().replace(/\/$/, ''))
   .filter(Boolean);
 
 const corsOptions = {
   origin: function(origin, callback) {
     // Allow non-browser requests (origin undefined) and any whitelisted origin
-    if (!origin || CLIENT_ORIGINS.includes(origin)) {
+    const normalizedOrigin = origin ? origin.replace(/\/$/, '') : undefined;
+    if (!normalizedOrigin || CLIENT_ORIGINS.includes(normalizedOrigin)) {
       return callback(null, true);
     }
     return callback(new Error(`Origin ${origin} not allowed by CORS`));
@@ -30,6 +31,11 @@ const io = socketIo(server, {
 });
 
 app.use(cors(corsOptions));
+
+// Optional root route for health/visibility
+app.get('/', (req, res) => {
+  res.status(200).send('Live Polling System Server is running');
+});
 app.use(express.json());
 
 // In-memory storage (for demo purposes)
