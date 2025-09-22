@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/live-polling-system/static/css/main.346bc2be.css",
+    "main.js": "/live-polling-system/static/js/main.2533aeb1.js",
+    "static/js/453.a3c1d153.chunk.js": "/live-polling-system/static/js/453.a3c1d153.chunk.js",
+    "index.html": "/live-polling-system/index.html",
+    "main.346bc2be.css.map": "/live-polling-system/static/css/main.346bc2be.css.map",
+    "main.2533aeb1.js.map": "/live-polling-system/static/js/main.2533aeb1.js.map",
+    "453.a3c1d153.chunk.js.map": "/live-polling-system/static/js/453.a3c1d153.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.346bc2be.css",
+    "static/js/main.2533aeb1.js"
+  ]
+}
