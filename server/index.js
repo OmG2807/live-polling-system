@@ -7,18 +7,29 @@ const { v4: uuidv4 } = require('uuid');
 const app = express();
 const server = http.createServer(app);
 
-// Allow CORS from environment-provided origin (e.g., Netlify) or localhost by default
-const ALLOWED_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
+// Allow CORS from one or many origins via env (CLIENT_ORIGINS comma-separated), fallback to localhost
+const CLIENT_ORIGINS = (process.env.CLIENT_ORIGINS || process.env.CLIENT_ORIGIN || 'http://localhost:3000')
+  .split(',')
+  .map(o => o.trim())
+  .filter(Boolean);
+
+const corsOptions = {
+  origin: function(origin, callback) {
+    // Allow non-browser requests (origin undefined) and any whitelisted origin
+    if (!origin || CLIENT_ORIGINS.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`Origin ${origin} not allowed by CORS`));
+  },
+  methods: ["GET", "POST"],
+  credentials: true,
+};
 
 const io = socketIo(server, {
-  cors: {
-    origin: ALLOWED_ORIGIN,
-    methods: ["GET", "POST"],
-    credentials: true,
-  }
+  cors: corsOptions
 });
 
-app.use(cors({ origin: ALLOWED_ORIGIN, methods: ["GET", "POST"], credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // In-memory storage (for demo purposes)

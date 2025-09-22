@@ -167,20 +167,43 @@ live-polling-system/
 
 ## Deployment
 
-### Frontend Deployment (Netlify/Vercel)
-1. Build the React app: `cd client && npm run build`
-2. Deploy the `build` folder to your hosting platform
-3. Update the Socket.io server URL in the client code
+### One-click GitHub CI Deploys (Recommended)
 
-### Backend Deployment (Heroku/Railway)
-1. Set environment variables if needed
-2. Deploy the `server` folder
-3. Update CORS settings for your frontend domain
+#### Frontend (Netlify)
+1. Push this repo to GitHub.
+2. In Netlify, New site from Git → pick this repo.
+3. Build settings:
+   - Base directory: `client`
+   - Build command: `npm install && npm run build`
+   - Publish directory: `build`
+4. Environment variables (Site settings → Build & deploy → Environment):
+   - `REACT_APP_SERVER_URL=https://<your-server-hostname>`
+5. Deploy; note the site URL (e.g., `https://live-polling-system-intervue.netlify.app`).
+
+#### Backend (Render)
+1. In Render, Create new → Web Service → From GitHub → pick this repo.
+2. Service settings:
+   - Root Directory: `server`
+   - Build Command: `npm install`
+   - Start Command: `node index.js`
+   - Environment: `Node`
+3. Environment variables:
+   - `CLIENT_ORIGINS=https://<your-netlify-site>,http://localhost:3000`
+   - `NODE_VERSION=18`
+4. Deploy; copy the server URL (e.g., `https://your-app.onrender.com`).
+5. Back in Netlify, set `REACT_APP_SERVER_URL` to that server URL and redeploy.
+
+### Backend Deployment (Alternative: Railway/Fly/Heroku)
+Follow similar steps: deploy `server/`, set `CLIENT_ORIGINS`, and use the resulting URL for `REACT_APP_SERVER_URL` in Netlify.
 
 ### Environment Variables
 ```bash
-PORT=5000  # Backend server port
-NODE_ENV=production  # Environment mode
+PORT=5000                         # Backend server port
+NODE_ENV=production               # Environment mode
+# Server CORS/Socket.IO allowed origins (comma-separated)
+CLIENT_ORIGINS=http://localhost:3000,https://live-polling-system-intervue.netlify.app
+# Client build-time server URL (Netlify Site settings)
+REACT_APP_SERVER_URL=https://your-server-hostname
 ```
 
 ## Testing the Application
